@@ -1376,17 +1376,53 @@ button.submit:hover {
 /* Text reveal animations */
 .text-reveal {
     overflow: hidden;
+    position: relative;
 }
 
 .text-reveal-line {
-    display: inline-block;
-    transform: translateY(100%);
-    animation: slideUp 0.8s ease forwards;
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 @keyframes slideUp {
     to {
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .intro h1 {
+        font-size: 32px;
+        line-height: 1.3;
+    }
+
+    .text-reveal-line {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    /* Ensure spans are visible on mobile */
+    .text-reveal span {
+        display: inline-block;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Adjust intro spacing */
+    .intro {
+        margin: 32px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro h1 {
+        font-size: 28px;
+    }
+
+    .text-reveal-line {
+        margin-bottom: 4px;
     }
 }
 
