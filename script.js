@@ -192,8 +192,18 @@ function toggleMenu() {
     menuToggle.innerHTML = navLinks.classList.contains('open') 
         ? '<i class="fas fa-times"></i>' 
         : '<i class="fas fa-bars"></i>';
+}
 
-    // Handle click events on nav links
+function closeMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.querySelector('.menu-toggle');
+    
+    navLinks.classList.remove('open');
+    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Handle navigation clicks
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -216,33 +226,22 @@ function toggleMenu() {
                 });
 
                 // Close mobile menu
-                navLinks.classList.remove('open');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                closeMenu();
             }
         });
     });
-}
 
-// Update closeMenu function
-function closeMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    navLinks.classList.remove('open');
-    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-}
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const navLinks = document.getElementById('navLinks');
+        const menuToggle = document.querySelector('.menu-toggle');
 
-document.addEventListener("click", (e) => {
-  const navLinks = document.getElementById("navLinks");
-  const menuToggle = document.querySelector(".menu-toggle");
-
-  if (
-    navLinks.classList.contains("open") &&
-    !navLinks.contains(e.target) &&
-    !menuToggle.contains(e.target)
-  ) {
-    closeMenu();
-  }
+        if (navLinks.classList.contains('open') && 
+            !navLinks.contains(e.target) && 
+            !menuToggle.contains(e.target)) {
+            closeMenu();
+        }
+    });
 });
 
 // =============================
@@ -453,53 +452,4 @@ function observeStats() {
 document.addEventListener('DOMContentLoaded', () => {
     observeStats();
 });
-
-// Re-initialize on mobile menu toggle
-function toggleMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    navLinks.classList.toggle('open');
-    menuToggle.innerHTML = navLinks.classList.contains('open') 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
-
-    // Handle click events on nav links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-
-            if (targetSection) {
-                // Remove active class from all links
-                document.querySelectorAll('.nav-link')
-                    .forEach(l => l.classList.remove('active'));
-
-                // Add active class to clicked link
-                this.classList.add('active');
-
-                // Smooth scroll to section
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-
-                // Close mobile menu
-                navLinks.classList.remove('open');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-    });
-}
-
-// Update closeMenu function
-function closeMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    navLinks.classList.remove('open');
-    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-}
 
