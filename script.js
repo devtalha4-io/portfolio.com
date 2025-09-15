@@ -194,124 +194,64 @@ function toggleMenu() {
         : '<i class="fas fa-bars"></i>';
 }
 
-function closeMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    navLinks.classList.remove('open');
-    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-}
-
+// Update the navigation event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Handle navigation clicks
     document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
             
-            const targetId = this.getAttribute('href');
+            // Get the target section
+            const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
 
             if (targetSection) {
-                // Remove active class from all links
+                // Update active states
                 document.querySelectorAll('.nav-link')
                     .forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
 
-                // Add active class to clicked link
-                this.classList.add('active');
+                // Calculate offset for header
+                const offset = 60; // Adjust this value based on your header height
+                const targetPosition = targetSection.offsetTop - offset;
 
-                // Smooth scroll to section
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Smooth scroll
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
 
                 // Close mobile menu
-                closeMenu();
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('open');
+                
+                // Update menu toggle icon
+                const menuToggle = document.querySelector('.menu-toggle');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
     });
+});
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        const navLinks = document.getElementById('navLinks');
-        const menuToggle = document.querySelector('.menu-toggle');
+// Remove duplicate event listeners and keep only this updateActiveLink function
+function updateActiveLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const scrollPos = window.pageYOffset + 100; // Adjusted offset
 
-        if (navLinks.classList.contains('open') && 
-            !navLinks.contains(e.target) && 
-            !menuToggle.contains(e.target)) {
-            closeMenu();
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100; // Adjusted offset
+        const sectionHeight = section.clientHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
         }
     });
-});
-
-// =============================
-// Smooth Scrolling Navbar with Active Link Detection
-// =============================
-document.querySelectorAll(".nav-link").forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    const targetId = this.getAttribute("href");
-    const targetSection = document.querySelector(targetId);
-
-    if (targetSection) {
-      // Remove active class from all links
-      document
-        .querySelectorAll(".nav-link")
-        .forEach((l) => l.classList.remove("active"));
-
-      // Add active class to clicked link
-      this.classList.add("active");
-
-      // Smooth scroll to section
-      targetSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
-      // Close mobile menu if open
-      if (window.innerWidth <= 980) {
-        setTimeout(closeMenu, 300);
-      }
-    }
-  });
-});
-
-// =============================
-// Active Link Detection on Scroll
-// =============================
-function updateActiveLink() {
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
-  const scrollPos = window.pageYOffset + 150;
-
-  let activeSection = "";
-
-  // Check which section is currently in view
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    const sectionId = section.getAttribute("id");
-
-    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-      activeSection = sectionId;
-    }
-  });
-
-  // Special case for top of page - show Home as active
-  if (window.pageYOffset < 100) {
-    activeSection = "home";
-  }
-
-  // Update active link
-  navLinks.forEach((link) => {
-    const linkTarget = link.getAttribute("href").substring(1);
-    
-    if (linkTarget === activeSection) {
-      navLinks.forEach((l) => l.classList.remove("active"));
-      link.classList.add("active");
-    }
-  });
 }
 
 // Throttled scroll event listener
