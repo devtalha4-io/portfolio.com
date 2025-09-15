@@ -184,23 +184,52 @@ document
 // =============================
 // Mobile Menu Toggle
 // =============================
-
-
 function toggleMenu() {
-  const navLinks = document.getElementById("navLinks");
-  const menuToggle = document.querySelector(".menu-toggle");
-  navLinks.classList.toggle("open");
-  menuToggle.innerHTML = navLinks.classList.contains("open")
-    ? '<i class="fas fa-times"></i>'
-    : '<i class="fas fa-bars"></i>';
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.querySelector('.menu-toggle');
+    
+    navLinks.classList.toggle('open');
+    menuToggle.innerHTML = navLinks.classList.contains('open') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+
+    // Handle click events on nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link')
+                    .forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Smooth scroll to section
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Close mobile menu
+                navLinks.classList.remove('open');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    });
 }
 
+// Update closeMenu function
 function closeMenu() {
-  const navLinks = document.getElementById("navLinks");
-  const menuToggle = document.querySelector(".menu-toggle");
-
-  navLinks.classList.remove("open");
-  menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.querySelector('.menu-toggle');
+    
+    navLinks.classList.remove('open');
+    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
 }
 
 document.addEventListener("click", (e) => {
@@ -428,23 +457,49 @@ document.addEventListener('DOMContentLoaded', () => {
 // Re-initialize on mobile menu toggle
 function toggleMenu() {
     const navLinks = document.getElementById('navLinks');
-    navLinks.classList.toggle('open');
+    const menuToggle = document.querySelector('.menu-toggle');
     
-    // Re-trigger stats counting if stats section is visible
-    const statsSection = document.querySelector('.about-stats');
-    if (statsSection && isElementInViewport(statsSection)) {
-        startCounting();
-    }
+    navLinks.classList.toggle('open');
+    menuToggle.innerHTML = navLinks.classList.contains('open') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+
+    // Handle click events on nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link')
+                    .forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Smooth scroll to section
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Close mobile menu
+                navLinks.classList.remove('open');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    });
 }
 
-// Helper function to check if element is in viewport
-function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+// Update closeMenu function
+function closeMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const menuToggle = document.querySelector('.menu-toggle');
+    
+    navLinks.classList.remove('open');
+    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
 }
 
