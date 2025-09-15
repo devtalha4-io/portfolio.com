@@ -184,6 +184,8 @@ document
 // =============================
 // Mobile Menu Toggle
 // =============================
+
+
 function toggleMenu() {
   const navLinks = document.getElementById("navLinks");
   const menuToggle = document.querySelector(".menu-toggle");
@@ -371,5 +373,78 @@ function showSuccessMessage() {
     submitBtn.textContent = 'Send message';
     submitBtn.style.background = 'linear-gradient(135deg, var(--accent), var(--accent-light))';
   }, 3000);
+}
+
+// Stats counter function
+function startCounting() {
+    const stats = document.querySelectorAll('.stat-number');
+    
+    stats.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-count'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const counter = setInterval(() => {
+            current += increment;
+            stat.textContent = Math.floor(current);
+
+            if (current >= target) {
+                stat.textContent = target;
+                clearInterval(counter);
+            }
+        }, 16);
+    });
+}
+
+// Intersection Observer for stats
+function observeStats() {
+    const statsSection = document.querySelector('.about-stats');
+    const options = {
+        root: null,
+        threshold: 0.2,
+        rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startCounting();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    if (statsSection) {
+        observer.observe(statsSection);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    observeStats();
+});
+
+// Re-initialize on mobile menu toggle
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('open');
+    
+    // Re-trigger stats counting if stats section is visible
+    const statsSection = document.querySelector('.about-stats');
+    if (statsSection && isElementInViewport(statsSection)) {
+        startCounting();
+    }
+}
+
+// Helper function to check if element is in viewport
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
 }
 
