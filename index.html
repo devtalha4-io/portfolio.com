@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>M. Talha — Frontend Developer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+
+
+</head>
+
+<body>
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-animation">
+        <div class="loader-circle"></div>
+        <div class="loader-circle"></div>
+        <div class="loader-circle"></div>
+      </div>
+      <div class="loader-text">PORTFOLIO</div>
+      <div class="loader-name">M. Talha</div>
+    </div>
+  </div>
+  <div class="stars" id="stars"></div>
+
+  <!-- Floating shapes -->
+  <div class="floating-shapes">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
+
+  <!-- Back to top button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Right-side Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Section navigation">
+    <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+      <a href="#about" class="nav-link"><i class="fas fa-user"></i> About</a>
+      <a href="#tech" class="nav-link"><i class="fas fa-code"></i> Tech</a>
+      <a href="#education" class="nav-link"><i class="fas fa-graduation-cap"></i> Education</a>
+      <a href="#projects" class="nav-link"><i class="fas fa-project-diagram"></i> Projects</a>
+      <a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="left page-content">
+      <!-- Home Section -->
+      <section id="home">
+        <div class="brand">
+          <div class="logo">T</div>
+          <div>
+            <div class="name">M. Talha</div>
+            <div class="role">Frontend Developer — React · Next.js · UI</div>
+          </div>
+        </div>
+
+        <div class="intro">
+          <h1 class="text-reveal">
+            <span class="text-reveal-line">Designing fast, accessible</span><br>
+            <span class="text-reveal-line">&amp; delightful web experiences.</span>
+          </h1>
+          <p class="muted">I build UI-focused applications with attention to performance, accessibility, and
+            detail. I enjoy turning complex problems into simple, beautiful interfaces.</p>
+          <div class="actions">
+            <a class="btn" href="#projects">View projects</a>
+            <a class="btn ghost" href="#resume">View Resume</a>
+          </div>
+
+          <div class="social">
+            <a href="https://www.facebook.com/share/1CTAJwtESB/" target="_blank"><i
+                class="fab fa-facebook"></i><span>Facebook</span></a>
+            <a href="https://www.instagram.com/_talha_56?igsh=eTN4OXA2dm9vMXds" target="_blank"><i
+                class="fab fa-instagram"></i><span>Instagram</span></a>
+            <a href="https://github.com/devtalha4-io" target="_blank"><i class="fab fa-github"></i><span>GitHub</span></a>
+            <a href="https://www.linkedin.com/in/muhammad-talha-789694250/" target="_blank"><i
+                class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+          </div>
+        </div>
+    </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ENHANCED ABOUT SECTION -->
+    <section id="about">
+      <div class="about-content">
+        <h2>About Me</h2>
+        <p class="about-text muted">
+          I'm <span class="about-highlight">Muhammad Talha</span>, a passionate Frontend Developer with expertise in
+          <span class="about-highlight">HTML, CSS, JavaScript, React, and Next.js</span>. I enjoy creating clean,
+          responsive, and user-friendly websites that bring ideas to life. I have also worked with backend technologies
+          like <span class="about-highlight">Node.js, Express, and MongoDB</span>, which helps me build full-stack
+          applications.
+          I love solving problems, learning new technologies, and continuously improving my development skills. My goal
+          is to
+          deliver high-quality digital solutions that make a real impact.
+        </p>
+
+        <!-- Stats Section -->
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-number" data-count="3">0</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="25">0</span>
+            <span class="stat-label">Projects Completed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="15">0</span>
+            <span class="stat-label">Happy Clients</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-count="8">0</span>
+            <span class="stat-label">Technologies</span>
+          </div>
+        </div>
+
+        <!-- Skills by Category -->
+        <div class="about-skills">
+          <div class="skill-category">
+            <h4 style="color: #fff;">Frontend Development</h4>
+            <div class="skill-tags">
+              <div class="skill-tag"><span>React.js</span></div>
+              <div class="skill-tag"><span>Next.js</span></div>
+              <div class="skill-tag"><span>JavaScript</span></div>
+              <div class="skill-tag"><span>TypeScript</span></div>
+              <div class="skill-tag"><span>HTML5</span></div>
+              <div class="skill-tag"><span>CSS3</span></div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h4 style="color: #fff;">Styling &amp; Frameworks</h4>
+            <div class="skill-tags">
+              <div class="skill-tag"><span>Tailwind CSS</span></div>
+              <div class="skill-tag"><span>Bootstrap</span></div>
+              <div class="skill-tag"><span>Sass/SCSS</span></div>
+              <div class="skill-tag"><span>Material-UI</span></div>
+              <div class="skill-tag"><span>Styled Components</span></div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h4 style="color: #fff;">Backend &amp; Database</h4>
+            <div class="skill-tags">
+              <div class="skill-tag"><span>Node.js</span></div>
+              <div class="skill-tag"><span>Express.js</span></div>
+              <div class="skill-tag"><span>MongoDB</span></div>
+              <div class="skill-tag"><span>MySQL</span></div>
+              <div class="skill-tag"><span>Firebase</span></div>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <h4 style="color: #fff;">Tools &amp; Others</h4>
+            <div class="skill-tags">
+              <div class="skill-tag"><span>Git/GitHub</span></div>
+              <div class="skill-tag"><span>VS Code</span></div>
+              <div class="skill-tag"><span>Figma</span></div>
+              <div class="skill-tag"><span>Webpack</span></div>
+              <div class="skill-tag"><span>C++</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="tech">
+      <h2>Tech Stack</h2>
+      <div class="tech">
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+            alt="html">
+          <div>HTML5</div>
+        </div>
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+            alt="css">
+          <div>CSS3</div>
+        </div>
+        <div class="item"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="js">
+          <div>JavaScript</div>
+        </div>
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+            alt="bootstrap">
+          <div>Bootstrap</div>
+        </div>
+        <div class="item"><img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="tw">
+          <div>Tailwind</div>
+        </div>
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+            alt="react">
+          <div>React</div>
+        </div>
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+            alt="nextjs">
+          <div>Next.js</div>
+        </div>
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+            alt="mongo">
+          <div>MongoDB</div>
+        </div>
+        <div class="item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+            alt="cpp">
+          <div>C++</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="education-item">
+        <h4>B.Sc. in Information Technology</h4>
+        <div class="institution">Rise University</div>
+        <div class="date">2022 - 2026</div>
+        <p class="muted">Specialized in web technologies and user interface design. Completed coursework in
+          advanced JavaScript, responsive design, and web performance optimization.</p>
+      </div>
+      <div class="education-divider"></div>
+
+      <div class="education-item">
+        <h4>Frontend Development Certification</h4>
+        <div class="institution">Free Code Camp</div>
+        <div class="date">2022</div>
+        <p class="muted">Advanced frontend development with focus on React, state management, and modern CSS
+          techniques.</p>
+      </div>
+      <div class="education-divider"></div>
+
+      <div class="education-item">
+        <h4>Intermediate In Computer Science</h4>
+        <div class="institution">Superior College</div>
+        <div class="date">2021</div>
+        <p class="muted">User interface and experience design principles, prototyping, and usability
+          testing.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="react">React</button>
+        <button class="filter-btn" data-filter="javascript">JavaScript</button>
+        <button class="filter-btn" data-filter="css">CSS</button>
+      </div>
+
+      <div class="projects">
+        <div class="card" data-category="react">
+          <div class="project-thumb">Egy-Railway</div>
+          <h3>Egy-Railway</h3>
+          <p class="muted">A responsive booking interface with seat selection and local storage.
+            Implemented with React and custom CSS.</p>
+        </div>
+        <div class="card" data-category="css">
+          <div class="project-thumb">The Wild Oasis</div>
+          <h3>The Wild Oasis</h3>
+          <p class="muted">A nature-focused landing with subtle interactions and animations. Features
+            parallax scrolling and responsive image loading.</p>
+        </div>
+        <div class="card" data-category="javascript">
+          <div class="project-thumb">Foodie</div>
+          <h3>Foodie</h3>
+          <p class="muted">Accessible food ordering UI prototype with performance optimizations. Includes
+            keyboard navigation and screen reader support.</p>
+        </div>
+        <div class="card" data-category="css">
+          <div class="project-thumb">Natours Landing</div>
+          <h3>Natours Landing</h3>
+          <p class="muted">Landing page demonstrating layout, maps, and responsive imagery. Built with CSS
+            Grid and Flexbox.</p>
+        </div>
+        <div class="card" data-category="react">
+          <div class="project-thumb">Task Manager</div>
+          <h3>Task Manager</h3>
+          <p class="muted">A productivity app with drag-and-drop functionality, task categorization, and local storage
+            persistence.</p>
+        </div>
+        <div class="card" data-category="javascript">
+          <div class="project-thumb">Weather App</div>
+          <h3>Weather App</h3>
+          <p class="muted">Real-time weather application with location detection, 5-day forecast, and interactive
+            charts.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="resume">
+      <h2>Resume</h2>
+      <div class="resume-item">
+        <h4>Frontend Developer</h4>
+        <div class="date">2022 - Present</div>
+        <p class="muted">Developed responsive web applications using React, Next.js, and modern CSS
+          frameworks. Collaborated with UX designers to implement pixel-perfect interfaces.</p>
+      </div>
+
+      <div class="resume-item">
+        <h4>UI Developer Intern</h4>
+        <div class="date">2022 - 2023</div>
+        <p class="muted">Assisted in building component libraries and design systems. Implemented responsive
+          layouts and optimized web performance.</p>
+      </div>
+
+      <div class="resume-item">
+        <h4>Freelance Web Developer</h4>
+        <div class="date">2023 - Continue</div>
+        <p class="muted">Created websites for small businesses focusing on accessibility and mobile-first
+          design. Implemented SEO best practices.</p>
+      </div>
+
+      <div class="actions" style="justify-content: center; margin-top: 30px;">
+        <a class="btn" href="Talha.resume.pdf" download><i class="fas fa-download"></i> Download Resume (PDF)</a>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section id="contact">
+      <div class="contact-header">
+        <h2>Get In Touch</h2>
+        <p class="contact-description">
+          Ready to start your next project? Let's collaborate and create something amazing together!
+        </p>
+      </div>
+
+      <form onsubmit="event.preventDefault();showSuccessMessage()">
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Email" required />
+        <textarea rows="4" placeholder="Message" required></textarea>
+        <button class="submit">Send message</button>
+      </form>
+
+      <div class="contact-methods">
+        <div class="contact-method">
+          <i class="fas fa-envelope"></i>
+          <h4>Email</h4>
+          <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+              data-cfemail="472a322f262a2a262333262b2f267f73737307202a262e2b6924282a">devtalha4@gmail.com</a></p>
+        </div>
+        <div class="contact-method">
+          <i class="fas fa-phone"></i>
+          <h4>Phone</h4>
+          <p>Available on request</p>
+        </div>
+        <div class="contact-method">
+          <i class="fas fa-map-marker-alt"></i>
+          <h4>Location</h4>
+          <p>Lahore, Punjab, Pakistan</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <footer>
+    <div style="color: #fff;">© 2025 M. Talha. All rights reserved.</div>
+    <br>
+    <p style="color: #fff;">Get in touch</p>
+    <a href="/cdn-cgi/l/email-protection#ea8e8f9c9e8b86828bdeaa8d878b8386c4898587" class="footer-email"><span
+        class="__cf_email__" data-cfemail="85e1e0f3f1e4e9ede4b1c5e2e8e4ece9abe6eae8">[devtalha4@gmail.com]</span></a>
+  </footer>
+
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="script.js"></script>
+
+
+
+</body>
+
+</html>
