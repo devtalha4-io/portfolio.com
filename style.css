@@ -369,6 +369,7 @@ footer {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     transition: all 0.3s ease;
+    white-space: nowrap; /* Add this */
 }
 
 .intro h1:hover {
@@ -1376,53 +1377,27 @@ button.submit:hover {
 /* Text reveal animations */
 .text-reveal {
     overflow: hidden;
-    position: relative;
 }
 
 .text-reveal-line {
-    display: block;
+    display: inline;  /* Change from block to inline */
     visibility: visible;
     opacity: 1;
+    white-space: nowrap; /* Add this */
 }
 
-@keyframes slideUp {
-    to {
-        transform: translateY(0);
-    }
+.text-reveal span {
+    display: inline;  /* Change from inline-block to inline */
+    white-space: nowrap; /* Add this */
 }
 
+/* Keep mobile styles */
 @media (max-width: 768px) {
-    .intro h1 {
-        font-size: 32px;
-        line-height: 1.3;
-    }
-
     .text-reveal-line {
         display: inline-block;
         width: 100%;
         margin-bottom: 8px;
-    }
-
-    /* Ensure spans are visible on mobile */
-    .text-reveal span {
-        display: inline-block;
-        visibility: visible;
-        opacity: 1;
-    }
-
-    /* Adjust intro spacing */
-    .intro {
-        margin: 32px 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .intro h1 {
-        font-size: 28px;
-    }
-
-    .text-reveal-line {
-        margin-bottom: 4px;
+        white-space: normal; /* Allow wrapping on mobile */
     }
 }
 
