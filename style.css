@@ -1514,7 +1514,7 @@ button.submit:hover {
     }
 
     .intro h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     .social {
@@ -1583,4 +1583,5 @@ button.submit:hover {
     .skill-tags {
         justify-content: center;
     }
+
 }
