@@ -199,45 +199,52 @@ document
 // Enhanced Mobile Menu Toggle
 // =============================
 function toggleMenu() {
-  const navbar = document.querySelector(".navbar");
-  const menuToggle = document.querySelector(".menu-toggle");
-  const body = document.body;
+    const navbar = document.querySelector(".navbar");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const body = document.body;
 
-  navbar.classList.toggle("mobile-open");
-
-  if (navbar.classList.contains("mobile-open")) {
-    menuToggle.innerHTML = '<i class="fas fa-times"></i>';
-    body.style.overflow = 'hidden'; // Prevent background scrolling
-  } else {
-    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    body.style.overflow = ''; // Restore scrolling
-  }
+    // Toggle classes immediately
+    navbar.classList.toggle("mobile-open");
+    navLinks.classList.toggle("open");
+    
+    // Update menu icon and body scroll
+    if (navbar.classList.contains("mobile-open")) {
+        menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+        body.style.overflow = 'hidden';
+    } else {
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        body.style.overflow = '';
+    }
 }
 
-function closeMenu() {
-  const navbar = document.querySelector(".navbar");
-  const menuToggle = document.querySelector(".menu-toggle");
-  const body = document.body;
-
-  navbar.classList.remove("mobile-open");
-  menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-  body.style.overflow = ''; // Restore scrolling
-}
-
-// Enhanced click event handling
-document.addEventListener("click", (e) => {
-  const navbar = document.querySelector(".navbar");
-  const menuToggle = document.querySelector(".menu-toggle");
-
-  if (navbar.classList.contains("mobile-open") &&
-    !navbar.contains(e.target) &&
-    !menuToggle.contains(e.target)) {
-    closeMenu();
-  }
+// Add event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById("menuToggle");
+    
+    // Add touchstart event for mobile
+    menuToggle.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevent default touch behavior
+        toggleMenu();
+    }, { passive: false });
+    
+    // Keep click event for desktop
+    menuToggle.addEventListener('click', toggleMenu);
+    
+    // Handle navigation link clicks
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const navbar = document.querySelector(".navbar");
+            const menuToggle = document.getElementById("menuToggle");
+            const navLinks = document.getElementById("navLinks");
+            
+            navbar.classList.remove("mobile-open");
+            navLinks.classList.remove("open");
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            document.body.style.overflow = '';
+        });
+    });
 });
-
-// Add event listener to menu toggle button
-document.getElementById('menuToggle').addEventListener('click', toggleMenu);
 
 // Close menu when a navigation link is clicked
 document.querySelectorAll('.nav-links a').forEach(link => {
