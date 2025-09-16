@@ -52,40 +52,55 @@ function animateTextReveal() {
 // Animate Counters
 // =============================
 function animateCounters() {
-  const counters = document.querySelectorAll(".stat-number[data-count]");
+    const counters = document.querySelectorAll('.stat-number');
+    let hasStarted = false;
 
-  const animateCounter = (counter) => {
-    const target = parseInt(counter.getAttribute("data-count"));
-    const increment = target / 50;
-    let current = 0;
+    function startCounting() {
+        if (hasStarted) return;
+        hasStarted = true;
 
-    const timer = setInterval(() => {
-      current += increment;
-      counter.textContent = Math.floor(current);
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            let current = 0;
+            const increment = target / 50; // Smaller increment for smoother animation
+            const updateInterval = 40; // Faster updates
 
-      if (current >= target) {
-        counter.textContent = target;
-        clearInterval(timer);
-      }
-    }, 50);
-  };
+            const timer = setInterval(() => {
+                current += increment;
+                counter.textContent = Math.floor(current);
 
-  const aboutObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          counters.forEach((counter) => animateCounter(counter));
-          aboutObserver.disconnect();
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                }
+            }, updateInterval);
+        });
+    }
 
-  const aboutSection = document.getElementById("about");
-  if (aboutSection) {
-    aboutObserver.observe(aboutSection);
-  }
+    // Create Intersection Observer for stats section
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasStarted) {
+                // Add small delay to ensure DOM is ready
+                setTimeout(startCounting, 100);
+            } else if (!entry.isIntersecting) {
+                // Reset counters when out of view
+                hasStarted = false;
+                counters.forEach(counter => {
+                    counter.textContent = '0';
+                });
+            }
+        });
+    }, {
+        threshold: 0.2, // Trigger earlier
+        rootMargin: '50px' // Give some margin
+    });
+
+    // Observe the stats section
+    const statsSection = document.querySelector('.about-stats');
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
 }
 
 // =============================
@@ -391,5 +406,5 @@ document.getElementById('contactForm').addEventListener('submit', function(event
             alert('Failed to send ❌ ' + JSON.stringify(error));
         });
 });
- 
+
 
