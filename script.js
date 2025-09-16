@@ -122,33 +122,33 @@ function animateSkillTags() {
 function createStars() {
   const stars = document.getElementById('stars');
   const total = 80;
-  
+
   // Clear existing stars first
   stars.innerHTML = '';
-  
+
   for (let i = 0; i < total; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-    
+
     // Random position
     star.style.left = Math.random() * 100 + 'vw';
     star.style.top = '-10px'; // Start above viewport
-    
+
     // Random size
     const size = Math.random() * 3 + 0.5;
     star.style.width = size + 'px';
     star.style.height = size + 'px';
-    
+
     // Random animation duration
     const duration = 8 + Math.random() * 12;
     star.style.animationDuration = duration + 's';
-    
+
     // Random delay for staggered effect
     star.style.animationDelay = Math.random() * duration + 's';
-    
+
     // Random opacity
     star.style.opacity = Math.random() * 0.8 + 0.3;
-    
+
     stars.appendChild(star);
   }
 }
@@ -169,7 +169,6 @@ const observer = new IntersectionObserver(
   },
   { threshold: 0.1 }
 );
-
 document
   .querySelectorAll(
     ".card, section, .tech .item, .resume-item, .education-item"
@@ -182,119 +181,111 @@ document
   });
 
 // =============================
-// Mobile Menu Toggle
+// Enhanced Mobile Menu Toggle
 // =============================
 function toggleMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    navLinks.classList.toggle('open');
-    menuToggle.innerHTML = navLinks.classList.contains('open') 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
+  const navbar = document.querySelector(".navbar");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const body = document.body;
+
+  navbar.classList.toggle("mobile-open");
+
+  if (navbar.classList.contains("mobile-open")) {
+    menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+    body.style.overflow = 'hidden'; // Prevent background scrolling
+  } else {
+    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    body.style.overflow = ''; // Restore scrolling
+  }
 }
 
-// Update the navigation event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Get the target section
-            const targetId = link.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
+function closeMenu() {
+  const navbar = document.querySelector(".navbar");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const body = document.body;
 
-            if (targetSection) {
-                // Update active states
-                document.querySelectorAll('.nav-link')
-                    .forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
-                // Calculate offset for header
-                const offset = 60; // Adjust this value based on your header height
-                const targetPosition = targetSection.offsetTop - offset;
-
-                // Smooth scroll
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-
-                // Close mobile menu
-                const navLinks = document.getElementById('navLinks');
-                navLinks.classList.remove('open');
-                
-                // Update menu toggle icon
-                const menuToggle = document.querySelector('.menu-toggle');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-    });
-});
-
-// Remove duplicate event listeners and keep only this updateActiveLink function
-function updateActiveLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const scrollPos = window.pageYOffset + 100; // Adjusted offset
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100; // Adjusted offset
-        const sectionHeight = section.clientHeight;
-        const sectionId = section.getAttribute('id');
-
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-    });
+  navbar.classList.remove("mobile-open");
+  menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+  body.style.overflow = ''; // Restore scrolling
 }
 
-// Throttled scroll event listener
-let scrollTimeout;
-window.addEventListener("scroll", () => {
-  if (scrollTimeout) clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(updateActiveLink, 10);
-});
+// Enhanced click event handling
+document.addEventListener("click", (e) => {
+  const navbar = document.querySelector(".navbar");
+  const menuToggle = document.querySelector(".menu-toggle");
 
-// Set initial active link on page load
-document.addEventListener("DOMContentLoaded", () => {
-  const homeLink = document.querySelector('.nav-link[href="#home"]');
-  if (homeLink) {
-    document.querySelectorAll(".nav-link").forEach((l) => l.classList.remove("active"));
-    homeLink.classList.add("active");
+  if (navbar.classList.contains("mobile-open") &&
+    !navbar.contains(e.target) &&
+    !menuToggle.contains(e.target)) {
+    closeMenu();
   }
 });
 
+// Add event listener to menu toggle button
+document.getElementById('menuToggle').addEventListener('click', toggleMenu);
+
+// Close menu when a navigation link is clicked
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    closeMenu();
+
+    // Smooth scroll to section
+    e.preventDefault();
+    const targetId = link.getAttribute('href');
+    const targetSection = document.querySelector(targetId);
+
+    if (targetSection) {
+      targetSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
 // =============================
-// Back to Top Button
+// Smooth Scrolling Navbar with Active Link Detection
 // =============================
-const backToTop = document.getElementById("backToTop");
+document.querySelectorAll(".nav-links a").forEach((link) => {
+  link.addEventListener("click", function (e) {
+    document.querySelectorAll(".nav-links a").forEach((item) => {
+      item.classList.remove("active");
+    });
+    this.classList.add("active");
+  });
+});
+
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-links a");
 
 window.addEventListener("scroll", () => {
-  if (window.pageYOffset > 300) {
+  let current = "";
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    if (pageYOffset >= sectionTop - sectionHeight / 3) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+    if (link.getAttribute("href").includes(current)) {
+      link.classList.add("active");
+    }
+  });
+
+  // Back to top button visibility
+  const backToTop = document.getElementById("backToTop");
+  if (window.scrollY > 300) {
     backToTop.classList.add("visible");
   } else {
     backToTop.classList.remove("visible");
   }
 });
 
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-  
-  // Update active link to Home when going to top
-  setTimeout(() => {
-    document.querySelectorAll(".nav-link").forEach((l) => l.classList.remove("active"));
-    const homeLink = document.querySelector('.nav-link[href="#home"]');
-    if (homeLink) homeLink.classList.add("active");
-  }, 100);
+document.getElementById("backToTop").addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 // =============================
@@ -323,73 +314,81 @@ document.querySelectorAll(".filter-btn").forEach((btn) => {
 });
 
 // =============================
-// Success Message Function
+// Form Submission Handling
 // =============================
-function showSuccessMessage() {
-  const form = document.querySelector('form');
-  const submitBtn = form.querySelector('.submit');
-  
-  // Show success state
-  submitBtn.textContent = 'Message Sent! ✓';
-  submitBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-  
-  // Reset form
-  form.reset();
-  
-  // Reset button after 3 seconds
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const submitBtn = this.querySelector('.submit');
+  submitBtn.textContent = 'Sending...';
+  submitBtn.disabled = true;
+
+  // Simulate form submission success after 2 seconds
   setTimeout(() => {
-    submitBtn.textContent = 'Send message';
-    submitBtn.style.background = 'linear-gradient(135deg, var(--accent), var(--accent-light))';
-  }, 3000);
-}
+    submitBtn.textContent = 'Message Sent! ✓';
+    submitBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+    this.reset();
 
-// Stats counter function
-function startCounting() {
-    const stats = document.querySelectorAll('.stat-number');
-    
-    stats.forEach(stat => {
-        const target = parseInt(stat.getAttribute('data-count'));
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        let current = 0;
-
-        const counter = setInterval(() => {
-            current += increment;
-            stat.textContent = Math.floor(current);
-
-            if (current >= target) {
-                stat.textContent = target;
-                clearInterval(counter);
-            }
-        }, 16);
-    });
-}
-
-// Intersection Observer for stats
-function observeStats() {
-    const statsSection = document.querySelector('.about-stats');
-    const options = {
-        root: null,
-        threshold: 0.2,
-        rootMargin: '0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                startCounting();
-                observer.unobserve(entry.target);
-            }
-        });
-    }, options);
-
-    if (statsSection) {
-        observer.observe(statsSection);
-    }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    observeStats();
+    // Reset the button after another 3 seconds
+    setTimeout(() => {
+      submitBtn.textContent = 'Send message';
+      submitBtn.style.background = ''; // Revert to original background
+      submitBtn.style.color = '';
+      submitBtn.disabled = false;
+    }, 3000);
+  }, 2000);
 });
 
+// =============================
+// Utility Functions
+// =============================
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+}
+
+function downloadResume() {
+  // Add your resume download logic here
+  alert('Resume download functionality would be implemented here');
+}
+
+// =============================
+// Keyboard Navigation Support
+// =============================
+document.addEventListener('keydown', (e) => {
+  const navbar = document.querySelector(".navbar");
+
+  // Close mobile menu with Escape key
+  if (e.key === 'Escape' && navbar.classList.contains("mobile-open")) {
+    closeMenu();
+  }
+});
+
+// =============================
+// Window Resize Handler
+// =============================
+window.addEventListener('resize', () => {
+  const navbar = document.querySelector(".navbar");
+
+  // Close mobile menu if window is resized to desktop size
+  if (window.innerWidth > 980 && navbar.classList.contains("mobile-open")) {
+    closeMenu();
+  }
+});
+
+// initialize email js 
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm('service_kf61skd', 'template_h7oe699', this)
+        .then(() => {
+            alert('Message sent successfully! ✅');
+        }, (error) => {
+            alert('Failed to send ❌ ' + JSON.stringify(error));
+        });
+});
+ 
