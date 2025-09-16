@@ -248,32 +248,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fix View Projects button functionality
     const viewProjectsBtn = document.querySelector('.view-projects-btn');
     if (viewProjectsBtn) {
-        viewProjectsBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const projectsSection = document.querySelector('#projects');
-            if (projectsSection) {
-                // Calculate offset based on device
-                const isMobile = window.innerWidth <= 768;
-                const offset = isMobile ? 80 : 60;
+        // Add both click and touchstart events
+        ['click', 'touchstart'].forEach(eventType => {
+            viewProjectsBtn.addEventListener(eventType, function(e) {
+                e.preventDefault();
                 
-                // Calculate target position
-                const targetPosition = projectsSection.offsetTop - offset;
+                const projectsSection = document.querySelector('#projects');
+                if (projectsSection) {
+                    // Calculate offset based on device
+                    const isMobile = window.innerWidth <= 768;
+                    const offset = isMobile ? 80 : 60;
+                    
+                    // Calculate target position
+                    const targetPosition = projectsSection.offsetTop - offset;
 
-                // Smooth scroll to projects section
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                    // Smooth scroll to projects section
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
 
-                // Update active nav link
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#projects') {
-                        link.classList.add('active');
+                    // Close mobile menu if open
+                    const navbar = document.querySelector('.navbar');
+                    const menuToggle = document.getElementById('menuToggle');
+                    if (navbar && navbar.classList.contains('mobile-open')) {
+                        navbar.classList.remove('mobile-open');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        document.body.style.overflow = '';
                     }
-                });
-            }
+
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#projects') {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }, { passive: false });
         });
     }
 });
