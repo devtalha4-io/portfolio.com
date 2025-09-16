@@ -388,12 +388,31 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
   submitBtn.textContent = 'Sending...';
   submitBtn.disabled = true;
 
-  // Using EmailJS
+  // Add form validation
+  const formData = new FormData(this);
+  const name = formData.get('name');
+  const email = formData.get('email');
+  const message = formData.get('message');
+
+  if (!name || !email || !message) {
+      showCustomAlert('Please fill in all fields', 'error');
+      submitBtn.textContent = 'Send message';
+      submitBtn.disabled = false;
+      return;
+  }
+
+  // Using EmailJS with better error handling
   emailjs.sendForm('service_kf61skd', 'template_h7oe699', this)
-      .then(() => {
-          showCustomAlert('Message sent successfully! Thank you for contacting.', 'success');
-          this.reset();
-      }, (error) => {
+      .then((response) => {
+          if (response.status === 200) {
+              showCustomAlert('Message sent successfully! Thank you for contacting.', 'success');
+              this.reset();
+          } else {
+              throw new Error('Failed to send message');
+          }
+      })
+      .catch((error) => {
+          console.error('Email error:', error);
           showCustomAlert('Failed to send message. Please try again.', 'error');
       })
       .finally(() => {
@@ -453,18 +472,6 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 980 && navbar.classList.contains("mobile-open")) {
     closeMenu();
   }
-});
-
-// initialize email js 
-document.getElementById('contactForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    emailjs.sendForm('service_kf61skd', 'template_h7oe699', this)
-        .then(() => {
-            alert('Message sent successfully! ✅');
-        }, (error) => {
-            alert('Failed to send ❌ ' + JSON.stringify(error));
-        });
 });
 
 function showCustomAlert(message, type = 'success') {
