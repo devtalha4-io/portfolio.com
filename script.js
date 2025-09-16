@@ -244,6 +244,38 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         });
     });
+
+    // Fix View Projects button functionality
+    const viewProjectsBtn = document.querySelector('.view-projects-btn');
+    if (viewProjectsBtn) {
+        viewProjectsBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const projectsSection = document.querySelector('#projects');
+            if (projectsSection) {
+                // Calculate offset based on device
+                const isMobile = window.innerWidth <= 768;
+                const offset = isMobile ? 80 : 60;
+                
+                // Calculate target position
+                const targetPosition = projectsSection.offsetTop - offset;
+
+                // Smooth scroll to projects section
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#projects') {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
 });
 
 // Close menu when a navigation link is clicked
@@ -344,20 +376,18 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
   submitBtn.textContent = 'Sending...';
   submitBtn.disabled = true;
 
-  // Simulate form submission success after 2 seconds
-  setTimeout(() => {
-    submitBtn.textContent = 'Message Sent! ✓';
-    submitBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-    this.reset();
-
-    // Reset the button after another 3 seconds
-    setTimeout(() => {
-      submitBtn.textContent = 'Send message';
-      submitBtn.style.background = ''; // Revert to original background
-      submitBtn.style.color = '';
-      submitBtn.disabled = false;
-    }, 3000);
-  }, 2000);
+  // Using EmailJS
+  emailjs.sendForm('service_kf61skd', 'template_h7oe699', this)
+      .then(() => {
+          showCustomAlert('Message sent successfully! Thank you for contacting.', 'success');
+          this.reset();
+      }, (error) => {
+          showCustomAlert('Failed to send message. Please try again.', 'error');
+      })
+      .finally(() => {
+          submitBtn.textContent = 'Send message';
+          submitBtn.disabled = false;
+      });
 });
 
 // =============================
@@ -374,8 +404,19 @@ function scrollToSection(sectionId) {
 }
 
 function downloadResume() {
-  // Add your resume download logic here
-  alert('Resume download functionality would be implemented here');
+    // Check if file exists first
+    fetch('Talha.resume.pdf')
+        .then(response => {
+            if (response.ok) {
+                showCustomAlert('Downloading resume...', 'success');
+                window.location.href = 'Talha.resume.pdf';
+            } else {
+                showCustomAlert('Resume file not available.', 'error');
+            }
+        })
+        .catch(() => {
+            showCustomAlert('Failed to download resume.', 'error');
+        });
 }
 
 // =============================
@@ -413,5 +454,27 @@ document.getElementById('contactForm').addEventListener('submit', function(event
             alert('Failed to send ❌ ' + JSON.stringify(error));
         });
 });
+
+function showCustomAlert(message, type = 'success') {
+    const alertEl = document.getElementById('customAlert');
+    const messageEl = alertEl.querySelector('.alert-message');
+    
+    // Set message and type
+    messageEl.textContent = message;
+    alertEl.classList.remove('success', 'error');
+    alertEl.classList.add(type);
+    
+    // Show alert
+    alertEl.classList.add('show');
+    
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+        alertEl.classList.remove('show');
+    }, 3000);
+    
+    // Close button functionality
+    const closeBtn = alertEl.querySelector('.alert-close');
+    closeBtn.onclick = () => alertEl.classList.remove('show');
+}
 
 
