@@ -1691,4 +1691,83 @@ button.submit:hover {
     .stat-number {
         font-size: 2rem;
     }
+
+    .view-projects-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    #projects {
+        scroll-margin-top: 80px;
+    }
+}
+
+.view-projects-btn {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s ease;
+}
+
+/* Custom Alert */
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: -100%;
+    background: rgba(15, 15, 16, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px 24px;
+    min-width: 300px;
+    z-index: 1000;
+    transition: right 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.custom-alert.show {
+    right: 20px;
+}
+
+.alert-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-icon {
+    font-size: 24px;
+}
+
+.alert-icon .success-icon {
+    color: #28a745;
+    display: none;
+}
+
+.alert-icon .error-icon {
+    color: #dc3545;
+    display: none;
+}
+
+.custom-alert.success .success-icon,
+.custom-alert.error .error-icon {
+    display: block;
+}
+
+.alert-message {
+    color: var(--text);
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.alert-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.3s ease;
+}
+
+.alert-close:hover {
+    color: var(--text);
 }
